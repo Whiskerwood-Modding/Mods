@@ -1,0 +1,116 @@
+class UTimeControlButtons_C : public UArcoWidgetBase
+{
+public:
+    class UWidgetTree* WidgetTree = "WidgetTree'Whiskerwood/Content/UI/TimeControlButtons.TimeControlButtons_C:WidgetTree'";
+    bool bClassRequiresNativeTick = true;
+    class UFunction* UberGraphFunction = "Function'Whiskerwood/Content/UI/TimeControlButtons.TimeControlButtons_C:ExecuteUbergraph_TimeControlButtons'";
+    TMap<FName, struct FGuid> CookedPropertyGuids = {
+        { FName("btn_speed1"), FGuid(0x03951D8F, 0xF12934BC, 0x87CDC2EC, 0x4E96372D) }, 
+        { FName("btn_speed2"), FGuid(0x484E7195, 0x92533927, 0x8270A1C1, 0x0B6AEB83) }, 
+        { FName("btn_speed4"), FGuid(0x67E67EAC, 0x1B2B31FD, 0xA6F119D9, 0x340C0C17) }, 
+        { FName("btnPause"), FGuid(0xE5CE1C20, 0x9E843FDD, 0x8569E0E1, 0x9506D9D9) }, 
+        { FName("Image_149"), FGuid(0x691D4A97, 0xF54C39B0, 0xAEB8FAF0, 0x8998EE5C) }, 
+        { FName("Symbol"), FGuid(0x59D15452, 0xB9133170, 0x95510EF5, 0x7382DC1C) }
+    };
+    struct FPointerToUberGraphFrame UberGraphFrame = {};
+    bool bHasScriptImplementedTick = false;
+    bool bHasScriptImplementedPaint = false;
+    class ULocTextBlock* Symbol = Class'/Script/SystemCore.LocTextBlock';
+    class UImage* Image_149 = Class'/Script/UMG.Image';
+    class UTimeButton_C* btnPause = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/TimeButton.TimeButton_C';
+    class UTimeButton_C* btn_speed4 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/TimeButton.TimeButton_C';
+    class UTimeButton_C* btn_speed2 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/TimeButton.TimeButton_C';
+    class UTimeButton_C* btn_speed1 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/TimeButton.TimeButton_C';
+
+    // (Final, UbergraphFunction)
+    private void ExecuteUbergraph_TimeControlButtons(int EntryPoint)
+    {
+        goto EntryPoint;
+    
+        Label_10:
+        UArcoWidgetBase::ListenToWidgetActions(btn_speed4);
+    
+        return;
+        Label_34:
+        return;
+        Label_39:
+        UArcoWidgetBase::ListenToWidgetActions(btnPause);
+    
+        UArcoWidgetBase::ListenToWidgetActions(btn_speed1);
+    
+        UArcoWidgetBase::ListenToWidgetActions(btn_speed2);
+    
+        goto Label_10;
+    
+        Label_101:
+        return;
+    }
+
+    // (BlueprintCosmetic, Event, Public, BlueprintEvent)
+    public void Construct()
+    {
+        ExecuteUbergraph_TimeControlButtons(39);
+    
+        return;
+    }
+
+    // (BlueprintCosmetic, Event, Public, BlueprintEvent)
+    public void PreConstruct(bool IsDesignTime)
+    {
+        UberGraphFrame->K2Node_Event_IsDesignTime = IsDesignTime;
+    
+        ExecuteUbergraph_TimeControlButtons(34);
+    
+        return;
+    }
+
+    // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public void SetData(int gameplaySpeed, bool paused)
+    {
+        btnPause->this->SetSelected(paused);
+    
+        GetValidPlayerGameplaySpeeds = UPlayerController_Play::GetValidPlayerGameplaySpeeds();
+    
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(paused);
+    
+        bool EqualEqual_IntInt_2 = UKismetMathLibrary::EqualEqual_IntInt(gameplaySpeed, GetValidPlayerGameplaySpeeds[0]);
+    
+        bool BooleanAND_2 = UKismetMathLibrary::BooleanAND(Not_PreBool, EqualEqual_IntInt_2);
+    
+        btn_speed1->this->SetSelected(BooleanAND_2);
+    
+        GetValidPlayerGameplaySpeeds = UPlayerController_Play::GetValidPlayerGameplaySpeeds();
+    
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(paused);
+    
+        bool EqualEqual_IntInt_1 = UKismetMathLibrary::EqualEqual_IntInt(gameplaySpeed, GetValidPlayerGameplaySpeeds[1]);
+    
+        bool BooleanAND_1 = UKismetMathLibrary::BooleanAND(Not_PreBool, EqualEqual_IntInt_1);
+    
+        btn_speed2->this->SetSelected(BooleanAND_1);
+    
+        GetValidPlayerGameplaySpeeds = UPlayerController_Play::GetValidPlayerGameplaySpeeds();
+    
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(paused);
+    
+        bool EqualEqual_IntInt = UKismetMathLibrary::EqualEqual_IntInt(gameplaySpeed, GetValidPlayerGameplaySpeeds[2]);
+    
+        bool BooleanAND = UKismetMathLibrary::BooleanAND(Not_PreBool, EqualEqual_IntInt);
+    
+        btn_speed4->this->SetSelected(BooleanAND);
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void SetButtonHighlight(class UWidget* btn, bool DoHighlight)
+    {
+        SelectFloat = UKismetMathLibrary::SelectFloat(1, 0.4, DoHighlight);
+    
+        CallFunc_SetRenderOpacity_InOpacity_ImplicitCast = Cast<float>(SelectFloat);
+    
+        btn->SetRenderOpacity(CallFunc_SetRenderOpacity_InOpacity_ImplicitCast);
+    
+        return;
+    }
+};

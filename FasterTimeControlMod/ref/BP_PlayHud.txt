@@ -1,0 +1,1925 @@
+class UBP_PlayHud_C : public UPlayHud
+{
+public:
+    class UWidgetTree* WidgetTree = "WidgetTree'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:WidgetTree'";
+    bool bClassRequiresNativeTick = true;
+    TArray<struct FDelegateRuntimeBinding> Bindings = {
+        {
+            "ObjectName": "HorizontalBox_9",
+            "PropertyName": FName("ToolTipWidget"),
+            "FunctionName": FName("tooltip_slice"),
+            "SourcePath": {
+                "Segments": {
+                    {
+                        "Name": FName("tooltip_slice"),
+                        "ArrayIndex": -1
+                    }
+                },
+                "CachedFunction": nullptr
+            },
+            "Kind": Function
+        }
+    };
+    TArray<class UWidgetAnimation*> Animations = {
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:fadein_INST'",
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:EodSlidein_INST'",
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:ThrobEod_INST'",
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:ReturnToHud_INST'",
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:WorldEffectNew_INST'",
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:HideRadialHintAnim_INST'",
+        "WidgetAnimation'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:animateSave_INST'"
+    };
+    TArray<class UComponentDelegateBinding*> DynamicBindingObjects = {
+        "ComponentDelegateBinding'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:ComponentDelegateBinding_0'"
+    };
+    class UFunction* UberGraphFunction = "Function'Whiskerwood/Content/UI/BP_PlayHud.BP_PlayHud_C:ExecuteUbergraph_BP_PlayHud'";
+    TMap<FName, struct FGuid> CookedPropertyGuids = {
+        { FName("ShowSaving"), FGuid(0x7D162DFB, 0x4C18E5D5, 0x2F3EF78A, 0x4B063BC2) }, 
+        { FName("pendingEodButtonAnimate"), FGuid(0xE807A237, 0x4135A2D1, 0x215A4EA4, 0xFB9E96DB) }, 
+        { FName("showToolbarHint"), FGuid(0x53B69B30, 0x4021BA7A, 0x89C8B89E, 0x91BFA91B) }, 
+        { FName("lastPauseState"), FGuid(0x00FFB05B, 0x400811F7, 0x4F3A9594, 0xBA8AE17D) }, 
+        { FName("embarked"), FGuid(0xA9ACB614, 0x47202C01, 0xB5D68686, 0xC1C173C5) }, 
+        { FName("FreecamUi"), FGuid(0xFA41B864, 0x46A1F55A, 0x4A73509E, 0xCB87F955) }, 
+        { FName("DeveloperView"), FGuid(0x01B86934, 0x44EA593F, 0xDD3B8D88, 0x81B5AF73) }, 
+        { FName("LoadingScreenWidget"), FGuid(0x706C21C6, 0x4D2823D8, 0xE2299EA7, 0x6B549D9B) }, 
+        { FName("HudStateChached"), FGuid(0xECFE345D, 0x4264C301, 0x7E30A486, 0xFA0A0312) }, 
+        { FName("ResourceHudStateCopy"), FGuid(0x4D8B9DE4, 0x48A674B2, 0x059D60B7, 0x99DAF36F) }, 
+        { FName("tutorialdialog"), FGuid(0x0E0550F4, 0x47C27AC9, 0x715094B7, 0x29E7E276) }, 
+        { FName("PauseMenu"), FGuid(0x59725C7D, 0x44A86AB7, 0xA57D3E88, 0x421191D6) }, 
+        { FName("Debug_DebugMenu"), FGuid(0x1B8A307F, 0x4568D444, 0xB8E906BD, 0xF5C4B414) }, 
+        { FName("Debug_ReplayMenu"), FGuid(0x42A38388, 0x41E4ED4C, 0xA34C6F98, 0xF6685A1A) }, 
+        { FName("animateSave"), FGuid(0x1439A3D1, 0x4F9CA7BD, 0x2BE69782, 0xD83EEB6A) }, 
+        { FName("HideRadialHintAnim"), FGuid(0x0EFE2865, 0x79C23FF8, 0x851383DC, 0xA9E0CD26) }, 
+        { FName("WorldEffectNew"), FGuid(0xE55EE634, 0x2D8D3BD1, 0xB05841DB, 0xDF347E21) }, 
+        { FName("ReturnToHud"), FGuid(0xC27D45DF, 0xB3F137C8, 0xABD15E51, 0x1D0743FA) }, 
+        { FName("ThrobEod"), FGuid(0x572BD075, 0x73A231D2, 0xB6A907F8, 0x33E071F3) }, 
+        { FName("EodSlidein"), FGuid(0xE79AEFDC, 0xA4DB3B5E, 0x965DECCC, 0x432DC5E2) }, 
+        { FName("fadein"), FGuid(0xA247B1C6, 0xF2A23823, 0x8F333A56, 0x873D0950) }, 
+        { FName("Arco_Button_CommonRound"), FGuid(0xD2186153, 0x97A9364E, 0x8CFFD5B2, 0x20858E3A) }, 
+        { FName("CentralActionables"), FGuid(0xF2F6D352, 0xC59B34D9, 0xA0EA20EC, 0x2BCBB5F2) }, 
+        { FName("CentralNotifications"), FGuid(0x133CB559, 0xCF1D3B08, 0xB67F4827, 0xDD1200B3) }, 
+        { FName("DayClock"), FGuid(0x0F2A456E, 0x48D03375, 0xB6DEB2DC, 0x59FA4EEB) }, 
+        { FName("EffectDetailsCondensed"), FGuid(0xBA747695, 0x681E3E84, 0xBC26FE63, 0x3CA15FF6) }, 
+        { FName("EffectIconView"), FGuid(0x0B54F335, 0xF7963FE6, 0x9672104E, 0x3BDF599D) }, 
+        { FName("effectsGrid"), FGuid(0x13D7A3E8, 0xF9C332C8, 0x84E0331A, 0x0B6DE306) }, 
+        { FName("EndDayBtn"), FGuid(0xA21F1F20, 0x92C83A49, 0xB7278894, 0xA26A7497) }, 
+        { FName("endDayOverlay"), FGuid(0x6502ADFE, 0xC44C3232, 0x961FE041, 0x4453AF2C) }, 
+        { FName("eodDayText"), FGuid(0xFC10A1BF, 0x1CB0365E, 0x8CF3A91A, 0xA060DB6C) }, 
+        { FName("EventQueue_Display"), FGuid(0x2DA2FAE0, 0xF438372F, 0xB0B84629, 0xD844D1F5) }, 
+        { FName("HideableElements"), FGuid(0x96FE6461, 0x0D38352A, 0x8ABD091B, 0xFEF5EF3C) }, 
+        { FName("HorizontalBox_9"), FGuid(0x9B46DDEB, 0x9841318D, 0x8A50AEA1, 0xB244E47F) }, 
+        { FName("HudQuestTracker"), FGuid(0xAEC7E4F1, 0x4D5D3DE7, 0x8AF381C6, 0x9E95A40C) }, 
+        { FName("Image"), FGuid(0x08D6D77E, 0x4E0B3156, 0xB74B541D, 0x6436FBA0) }, 
+        { FName("Image_1"), FGuid(0x588FBDB5, 0x4DB0DDBD, 0x0988EAB5, 0x8F656F1A) }, 
+        { FName("Image_90"), FGuid(0xC6F72A89, 0x0AEC3750, 0x9AFDDFB5, 0x9E768092) }, 
+        { FName("Image_142"), FGuid(0x9E3330DC, 0x4F375C2C, 0x25E128BA, 0x4BA2960B) }, 
+        { FName("Image_366"), FGuid(0x35B9CFF9, 0x2D8B31E6, 0xAA1F2DF9, 0x518444C5) }, 
+        { FName("ImportantAgentModifiers"), FGuid(0x0425DA54, 0x37A03C9E, 0xB38740BC, 0x8640135D) }, 
+        { FName("IslandBadge"), FGuid(0x13A56417, 0xE6D73EF2, 0x98B1DFBA, 0x4037D86E) }, 
+        { FName("KeybindHints"), FGuid(0x442EEE07, 0x4EF735D0, 0x826F82BE, 0x0F8C0118) }, 
+        { FName("LeftPanelEqualizer"), FGuid(0xE59905DE, 0x49D62CB6, 0x6EE46992, 0x78938DE2) }, 
+        { FName("MainHudCanvas"), FGuid(0x4B8FFA7C, 0xCFA2342A, 0xABAD1B41, 0xE4669AE2) }, 
+        { FName("MetaButtonsRow"), FGuid(0x1FAFB213, 0x91A23C06, 0xBD34D279, 0xA11E8150) }, 
+        { FName("PanelLeft"), FGuid(0x2490310F, 0x02313A52, 0x9EEC9831, 0x7FCEF3B9) }, 
+        { FName("PanelRight"), FGuid(0xF3B285B7, 0xD8A53F04, 0x97B90979, 0x0CDD61AA) }, 
+        { FName("Preplace_Phase"), FGuid(0x93F80B8A, 0x841735C9, 0x9776D4DC, 0xE7C9DF62) }, 
+        { FName("QuestStatus"), FGuid(0xD9642EED, 0x2B29310A, 0x8D310FBC, 0x9C90609B) }, 
+        { FName("radialHint"), FGuid(0x97959933, 0x200134BF, 0xA7636698, 0xBD318BDB) }, 
+        { FName("radialMenu"), FGuid(0xD5BED354, 0x91DB3060, 0xBF704204, 0x6DA36273) }, 
+        { FName("ReplayErr"), FGuid(0xAFCE8685, 0xC1D333E0, 0xBAF7DC4D, 0xBDFD30E5) }, 
+        { FName("ReplayText"), FGuid(0x01C01D71, 0xE25D3216, 0xBE866B8C, 0x2419628B) }, 
+        { FName("ResourcesParent"), FGuid(0x3821CF8F, 0xCFBC3444, 0xA6B70C65, 0xD584F92A) }, 
+        { FName("RevUi_Dot_62"), FGuid(0xA254EF32, 0x50EE3D5B, 0x95E52FE2, 0x8F8F8752) }, 
+        { FName("RevUi_PanelBg_68"), FGuid(0x8624DBC8, 0x3CF631CC, 0x8C2322A2, 0x155800A2) }, 
+        { FName("Rightbar"), FGuid(0x8120193F, 0x378730A7, 0xB5D087FB, 0x91356F2E) }, 
+        { FName("RightPanelEqualizer"), FGuid(0xA628FF7E, 0x4D3AA241, 0x08B55E90, 0xCCBBE6FE) }, 
+        { FName("SaveOverlay"), FGuid(0x0097DFBF, 0x20793C5A, 0x97E83C29, 0x0511B695) }, 
+        { FName("SeasonSummary"), FGuid(0x6D649C2E, 0x781D34A7, 0x9C8EE40D, 0x4384EFDB) }, 
+        { FName("Stat_AllFood"), FGuid(0xBEFE8B28, 0xF26D3C6A, 0x966D9C4D, 0xBF7E93EF) }, 
+        { FName("Stat_Approval"), FGuid(0xA6E4EAA1, 0xFB4935B6, 0xA4941890, 0xE0F9032D) }, 
+        { FName("stat_bricks"), FGuid(0x3D620215, 0xFD9F39C3, 0xA816DB3D, 0xC76B9C23) }, 
+        { FName("stat_copper"), FGuid(0xBC9E81CA, 0xC0793396, 0x9F33E850, 0xBA7E3AF4) }, 
+        { FName("Stat_DiploPoints"), FGuid(0x1772A1BD, 0x7AFB3271, 0x8DC5A27C, 0xF6856213) }, 
+        { FName("Stat_FreeWorkers"), FGuid(0x401686D8, 0x48773E14, 0x8E13498B, 0x8EE5B594) }, 
+        { FName("stat_fuel"), FGuid(0xC401F5FB, 0x15B03048, 0x8537E7A5, 0x4687339C) }, 
+        { FName("stat_iron"), FGuid(0xE641BC53, 0xFBEC35F9, 0x9588B148, 0xBF6A5182) }, 
+        { FName("stat_machinery"), FGuid(0x935C9CA6, 0xDA2435FB, 0x8072D688, 0xFBC21FB1) }, 
+        { FName("stat_planks"), FGuid(0xFADC8E9B, 0xF5593AF5, 0x810AC49E, 0x69E1F27F) }, 
+        { FName("Stat_Population"), FGuid(0x5D7FF9CE, 0xE1753510, 0x99C3B3D0, 0xE7356848) }, 
+        { FName("Stat_Rebellion"), FGuid(0x8F0B1F89, 0x42524E16, 0x9779B99F, 0x5AD268A0) }, 
+        { FName("stat_stone"), FGuid(0xD0015331, 0x43AF5BE2, 0xAB81B3BB, 0xD8FB6FB7) }, 
+        { FName("stat_wood"), FGuid(0x37E8C573, 0x62413FB0, 0x902BEFBA, 0x82A7A0B1) }, 
+        { FName("TaxQuestTracker"), FGuid(0x28CA9FFE, 0x9A3B3219, 0xA5AF38C0, 0x29886249) }, 
+        { FName("TimeControlButtons"), FGuid(0x12114913, 0xF9043CF3, 0xB1FAE2AC, 0xE19AAFCB) }, 
+        { FName("TimePausedStatusNotification"), FGuid(0x483C6118, 0xB732305D, 0xB6658BF3, 0xB3121AE5) }, 
+        { FName("TitleDisplay"), FGuid(0x216C89D6, 0xE8FB3969, 0xA774B933, 0x08F6AC5A) }, 
+        { FName("Toggle_Bulldoze"), FGuid(0x5110CEA2, 0x7B16301E, 0x8FD09910, 0x9F3AC76D) }, 
+        { FName("Toggle_Layers"), FGuid(0x2B6A03D9, 0xBE2135FD, 0xB182C769, 0x1721C183) }, 
+        { FName("Toggle_Temp"), FGuid(0x1DC8399A, 0xEDDF36A2, 0x84DD1485, 0x4FF2336D) }, 
+        { FName("toolbar"), FGuid(0x4F9069ED, 0x153538E5, 0x85A2810F, 0x170129B1) }, 
+        { FName("trackedResourcesGrid"), FGuid(0x466CDC4A, 0x4F7983CF, 0xDCFF5AA9, 0x4419648C) }, 
+        { FName("TransientMessages"), FGuid(0x6FBDDC09, 0x3C5E31FA, 0x94DF44BA, 0x90738AB5) }, 
+        { FName("Ui_FakeCursor_GamepadCursor"), FGuid(0xCC3F9D62, 0xA79035BF, 0x9F3AAD89, 0x80253437) }, 
+        { FName("Ui_FpsCounter"), FGuid(0x6A5A764A, 0x35BE3719, 0x83C7518B, 0x0214A760) }, 
+        { FName("Ui_InputHotkeyIcon"), FGuid(0xC7F999AA, 0x4114FBC7, 0x292F1CB6, 0x3E182325) }, 
+        { FName("Ui_InputHotkeyIcon_1"), FGuid(0x334C13FB, 0x4805654E, 0xF42879AE, 0x6D9605F3) }, 
+        { FName("Ui_InputHotkeyIcon_2"), FGuid(0xD3CAF6F6, 0x42DC2CB6, 0xF0E345A9, 0x134CACC2) }
+    };
+    struct FPointerToUberGraphFrame UberGraphFrame = {};
+    struct FHudState HudStateChached = {
+        "influence": 0,
+        "influenceCap": 0,
+        "recentInfluenceChanges": 0,
+        "unrest": 0,
+        "unrestCap": 0,
+        "recentUnrestChanges": 0,
+        "currentResearch": 0,
+        "maxResearch": 0,
+        "currentPopulation": 0,
+        "maxPopulation": 0,
+        "nUnemployed": 0,
+        "zLevel": 0,
+        "replayState": {
+            "showWindow": false,
+            "IsReplaying": false,
+            "IsPaused": false,
+            "currReplayFrame": 0,
+            "maxReplayFrame": 0,
+            "replaySpeed": 0,
+            "replayName": "",
+            "CurrentTime": 0,
+            "totalTime": 0,
+            "autoLoadReplay": false,
+            "autoFinishReplay": false,
+            "autoSkipToFrame": false,
+            "skipFrameGoal": 0,
+            "badReplay": false,
+            "skipFlyIn": false,
+            "loadBehavior": NEW_MAP
+        },
+        "TimeHudState": {
+            "CurrentTime": 0,
+            "TimeUntilNextPhase": 0,
+            "lengthOfCurrentPhase": 0,
+            "CurrentPhase": MID_DAY,
+            "timeOfWorkDay": 0,
+            "timeOfSunset": 0,
+            "timeofSunrise": 0,
+            "morningLen": 0,
+            "workdayLen": 0,
+            "nightLen": 0,
+            "day": 0,
+            "gameplaySpeed": 0,
+            "IsPaused": false,
+            "isTimeOfDayPaused": false,
+            "isPausedByEod": false,
+            "daysTillNextSeason": 0
+        },
+        "playerResourceSummary": {
+            "playerTrackedResources": {
+                "counts": {}
+            },
+            "totalFood": 0,
+            "totalRawFood": 0,
+            "totalCookedFood": 0,
+            "estimatedFoodConsumption": 0,
+            "totalDrink": 0,
+            "estimatedDrinkConsumption": 0,
+            "baseResourceCounts": {},
+            "resourceRecentDeltas": {},
+            "bCopperUnlocked": false,
+            "bIronUnlocked": false
+        },
+        "notifications": {
+            "notifications": {},
+            "needsUpdated": false
+        },
+        "maxResources": {
+            "counts": {}
+        },
+        "minResources": {
+            "counts": {}
+        },
+        "questState": {
+            "questLogEnabled": false,
+            "nPendingCompletions": 0,
+            "nTotalMissions": 0
+        },
+        "eventQueueState": {
+            "pendingEvents": {}
+        },
+        "SeasonSummary": {
+            "daysIntoSeason": 0,
+            "daysInSeason": 0,
+            "season": FName("None"),
+            "seasonData": {
+                "Label": "",
+                "Icon": nullptr,
+                "SeasonLengthDaysSystemTune": FName("None"),
+                "associatedUiColor": FLinearColor(0, 0, 0, 0)
+            },
+            "currentTemp": 0,
+            "currentHeat": 0
+        },
+        "MorningSummary": {
+            "desiredMeals": 0,
+            "consumedMeals": 0,
+            "availableRawFood": 0,
+            "availablePreppedFood": 0,
+            "desiredDrink": 0,
+            "consumedDrink": 0,
+            "availableWater": 0,
+            "availableAle": 0,
+            "secondsUntilPhaseEnd": 0,
+            "phaseIsPaused": false
+        },
+        "MidDaySummary": {
+            "secondsUntilPhaseEnd": 0
+        },
+        "EveningSummary": {
+            "desiredSleeps": 0,
+            "completedSleeps": 0,
+            "nHomeless": 0,
+            "secondsUntilPhaseEnd": 0
+        },
+        "problemSummaries": {
+            "problems": {}
+        },
+        "showDebugUi": false,
+        "showDeveloperUi": false,
+        "ShowHUD": false,
+        "showToolbar": false,
+        "showRightElements": false,
+        "showCenterMessageArea": false,
+        "showWheelHint": false,
+        "music": 0,
+        "HudEvents": {
+            "happyDelta": 0,
+            "prodDelta": 0,
+            "speedDelta": 0,
+            "buffDelta": 0,
+            "debuffDelta": 0
+        },
+        "sliceView": false,
+        "heatView": false,
+        "bulldozeActive": false,
+        "globalModifiers": {},
+        "victoryPending": false,
+        "postVictory": false,
+        "eodPending": false,
+        "enablePolicybutton": false,
+        "enableResearchbutton": false,
+        "PolicySummary": {
+            "nActivePolicies": 0
+        },
+        "factionSummary": {
+            "currentColonyLevel": 0,
+            "xpToNextLevel": 0,
+            "progressPercent": 0,
+            "rawDystrumStored": 0,
+            "refinedDystrumStored": 0
+        },
+        "m_activeEffects": {
+            "requestedNewEffectAnim": FName("None"),
+            "animateNewEffect": false,
+            "newEffect": {
+                "nDays": 1,
+                "Name": "",
+                "Description": "",
+                "iconTexture": nullptr,
+                "EffectType": "",
+                "associatedModifier": FName("None"),
+                "associatedSystemFlag": FName("None"),
+                "informExpired": true,
+                "negative": false
+            },
+            "effects": {}
+        },
+        "m_timelineSummary": {
+            "currentDay": {
+                "temperature": 0,
+                "heat": 0,
+                "weather": FName("None")
+            },
+            "forecast": {}
+        },
+        "m_debtsSummary": {
+            "debts": {},
+            "totalDebt": 0,
+            "daysUntil": 0,
+            "diplomacyPoints": 0,
+            "standing": 0,
+            "maxStanding": 0,
+            "standingDanger": false,
+            "standingString": "",
+            "showDiplomacyBuyHint": false
+        },
+        "lastHappinessMod": {
+            "Delta": 0,
+            "String": FName("None"),
+            "multCount": 0
+        },
+        "recentEffects": {},
+        "TechSummary": {
+            "currentResearch": FName("None"),
+            "percentComplete": 0
+        },
+        "showSaving": false,
+        "colonyName": "",
+        "showGamepadCursor": false,
+        "recentPolicyCosts": {}
+    };
+    class UWidgetBlueprintGeneratedClass* m_agentOverviewWidgetClass = "WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/AgentOverview.AgentOverview_C'";
+    class UWidgetBlueprintGeneratedClass* m_resourceOverviewWidgetClass = "WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/WindowTitleBar.WindowTitleBar_C'";
+    struct FSlateColor ForegroundColor = {
+        "ColorUseRule": UseColor_Specified
+    };
+    enum EWidgetPixelSnapping PixelSnapping = SnapToPixel;
+    class UUi_InputHotkeyIcon_C* Ui_InputHotkeyIcon_2 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/PixelUi/Ui_InputHotkeyIcon.Ui_InputHotkeyIcon_C';
+    class UUi_InputHotkeyIcon_C* Ui_InputHotkeyIcon_1 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/PixelUi/Ui_InputHotkeyIcon.Ui_InputHotkeyIcon_C';
+    class UUi_InputHotkeyIcon_C* Ui_InputHotkeyIcon = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/PixelUi/Ui_InputHotkeyIcon.Ui_InputHotkeyIcon_C';
+    class UUi_FpsCounter_C* Ui_FpsCounter = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/Ui_FpsCounter.Ui_FpsCounter_C';
+    class UUi_FakeCursor_GamepadCursor_C* Ui_FakeCursor_GamepadCursor = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/Ui_FakeCursor_GamepadCursor.Ui_FakeCursor_GamepadCursor_C';
+    class UTransientMessages_C* TransientMessages = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/TransientMessages.TransientMessages_C';
+    class UUniformGridPanel* trackedResourcesGrid = Class'/Script/UMG.UniformGridPanel';
+    class UBottomToolbar_C* toolbar = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/BottomToolbar.BottomToolbar_C';
+    class UarcoToggle_C* Toggle_Temp = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/arcoToggle.arcoToggle_C';
+    class UarcoToggle_C* Toggle_Layers = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/arcoToggle.arcoToggle_C';
+    class UarcoToggle_C* Toggle_Bulldoze = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/tabs/arcoToggle.arcoToggle_C';
+    class ULocTextBlock* TitleDisplay = Class'/Script/SystemCore.LocTextBlock';
+    class UTimePausedStatusNotification_C* TimePausedStatusNotification = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/TimePausedStatusNotification.TimePausedStatusNotification_C';
+    class UTimeControlButtons_C* TimeControlButtons = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/TimeControlButtons.TimeControlButtons_C';
+    class UHudQuestEntry_C* TaxQuestTracker = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/DebugUI_Components/HudQuestEntry.HudQuestEntry_C';
+    class URevUi_StatResource_C* stat_wood = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_stone = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* Stat_Rebellion = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* Stat_Population = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_planks = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_machinery = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_iron = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_fuel = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* Stat_FreeWorkers = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* Stat_DiploPoints = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_copper = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* stat_bricks = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* Stat_Approval = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class URevUi_StatResource_C* Stat_AllFood = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_StatResource.RevUi_StatResource_C';
+    class USeasonSummary_C* SeasonSummary = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/SeasonSummary.SeasonSummary_C';
+    class UOverlay* SaveOverlay = Class'/Script/UMG.Overlay';
+    class USizeBox* RightPanelEqualizer = Class'/Script/UMG.SizeBox';
+    class UOverlay* Rightbar = Class'/Script/UMG.Overlay';
+    class URevUi_PanelBg_C* RevUi_PanelBg_68 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_PanelBg.RevUi_PanelBg_C';
+    class URevUi_Dot_C* RevUi_Dot_62 = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/RevUi_Dot.RevUi_Dot_C';
+    class UHorizontalBox* ResourcesParent = Class'/Script/UMG.HorizontalBox';
+    class UTextBlock* ReplayText = Class'/Script/UMG.TextBlock';
+    class UTextBlock* ReplayErr = Class'/Script/UMG.TextBlock';
+    class UArco_NestedRadialMenu_C* radialMenu = WidgetBlueprintGeneratedClass'Whiskerwood/Content/ThirdParty/GenericRadialMenus/Templates/Arco_NestedRadialMenu.Arco_NestedRadialMenu_C';
+    class UOverlay* radialHint = Class'/Script/UMG.Overlay';
+    class UVerticalBox* QuestStatus = Class'/Script/UMG.VerticalBox';
+    class UPreplaceEmbark_Phase_C* Preplace_Phase = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/PreplaceEmbark_Phase.PreplaceEmbark_Phase_C';
+    class UHorizontalBox* PanelRight = Class'/Script/UMG.HorizontalBox';
+    class UHorizontalBox* PanelLeft = Class'/Script/UMG.HorizontalBox';
+    class UMetaButtonsRow_C* MetaButtonsRow = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/MetaButtonsRow.MetaButtonsRow_C';
+    class UCanvasPanel* MainHudCanvas = Class'/Script/UMG.CanvasPanel';
+    class USizeBox* LeftPanelEqualizer = Class'/Script/UMG.SizeBox';
+    class UKeybindHints_C* KeybindHints = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/KeybindHints.KeybindHints_C';
+    class UIslandBadge_C* IslandBadge = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/RevolutionUi/IslandBadge.IslandBadge_C';
+    class UHorizontalBox* ImportantAgentModifiers = Class'/Script/UMG.HorizontalBox';
+    class UImage* Image_366 = Class'/Script/UMG.Image';
+    class UImage* Image_142 = Class'/Script/UMG.Image';
+    class UImage* Image_90 = Class'/Script/UMG.Image';
+    class UImage* Image_1 = Class'/Script/UMG.Image';
+    class UImage* Image = Class'/Script/UMG.Image';
+    class UHudQuestTracker_C* HudQuestTracker = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/DebugUI_Components/HudQuestTracker.HudQuestTracker_C';
+    class UCanvasPanel* HideableElements = Class'/Script/UMG.CanvasPanel';
+    class UEventQueue_Display_C* EventQueue_Display = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/Events_Revisit/EventQueue_Display.EventQueue_Display_C';
+    class ULocTextBlock* eodDayText = Class'/Script/SystemCore.LocTextBlock';
+    class UOverlay* endDayOverlay = Class'/Script/UMG.Overlay';
+    class UHorizontalBox* EndDayBtn = Class'/Script/UMG.HorizontalBox';
+    class UUniformGridPanel* effectsGrid = Class'/Script/UMG.UniformGridPanel';
+    class UEffectIconView_C* EffectIconView = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/EffectIconView.EffectIconView_C';
+    class UEffectDetailsCondensed_C* EffectDetailsCondensed = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/EffectDetailsCondensed.EffectDetailsCondensed_C';
+    class UDayClock_C* DayClock = WidgetBlueprintGeneratedClass'Whiskerwood/Content/Code/Experimental/RadialProgress/DayClock.DayClock_C';
+    class UOverlay* CentralNotifications = Class'/Script/UMG.Overlay';
+    class UOverlay* CentralActionables = Class'/Script/UMG.Overlay';
+    class UArco_Button_CommonRound_C* Arco_Button_CommonRound = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/Arco_Button_CommonRound.Arco_Button_CommonRound_C';
+    class UWidgetAnimation* fadein = Class'/Script/UMG.WidgetAnimation';
+    class UWidgetAnimation* EodSlidein = Class'/Script/UMG.WidgetAnimation';
+    class UWidgetAnimation* ThrobEod = Class'/Script/UMG.WidgetAnimation';
+    class UWidgetAnimation* ReturnToHud = Class'/Script/UMG.WidgetAnimation';
+    class UWidgetAnimation* WorldEffectNew = Class'/Script/UMG.WidgetAnimation';
+    class UWidgetAnimation* HideRadialHintAnim = Class'/Script/UMG.WidgetAnimation';
+    class UWidgetAnimation* animateSave = Class'/Script/UMG.WidgetAnimation';
+    class UReplayWidget_C* Debug_ReplayMenu = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/ReplayWidget.ReplayWidget_C';
+    class UArcoWidgetBase* Debug_DebugMenu = Class'/Script/ProjectArco.ArcoWidgetBase';
+    class UArcoWidgetBase* PauseMenu = Class'/Script/ProjectArco.ArcoWidgetBase';
+    class UObject* tutorialdialog = Class'/Script/CoreUObject.Object';
+    TArray<struct FPlayerBankResource_UI> ResourceHudStateCopy = [
+        ScriptStruct'/Script/ProjectArco.PlayerBankResource_UI'
+    ];
+    class UWidget* LoadingScreenWidget = Class'/Script/UMG.Widget';
+    class UArcoWidgetBase* DeveloperView = Class'/Script/ProjectArco.ArcoWidgetBase';
+    class UPhotomodeCam_UI_C* FreecamUi = WidgetBlueprintGeneratedClass'Whiskerwood/Content/UI/PhotomodeCam_UI.PhotomodeCam_UI_C';
+    bool embarked;
+    bool lastPauseState;
+    bool showToolbarHint;
+    bool pendingEodButtonAnimate;
+    bool ShowSaving;
+private:
+    class UHorizontalBox* HorizontalBox_9 = Class'/Script/UMG.HorizontalBox';
+
+    // (Final, UbergraphFunction, HasDefaults)
+    private void ExecuteUbergraph_BP_PlayHud(int EntryPoint)
+    {
+        goto EntryPoint;
+    
+        Label_15:
+        this->AnimatePolicyCosts(K2Node_Event_recentPolicyCosts);
+    
+        Label_39:
+        if (!showToolbarHint)
+            goto Label_206;
+    
+        radialHint->SetVisibility(0x3);
+    
+        PlayAnimationReverse = UUserWidget::PlayAnimationReverse(HideRadialHintAnim, 1, false);
+    
+        UKismetSystemLibrary::PrintString(this, "Show", true, true, FLinearColor(0, 0.66, 1, 1), 2, "None");
+    
+        Label_206:
+        PlayAnimationForward = UUserWidget::PlayAnimationForward(HideRadialHintAnim, 1, false);
+    
+        UKismetSystemLibrary::PrintString(this, "Hide", true, true, FLinearColor(0, 0.66, 1, 1), 2, "None");
+    
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/BP_PlayHud_GridRootReflector.BP_PlayHud_GridRootReflector_C"), nullptr);
+    
+        Create->RealHud = this;
+    
+        Create->RelayoutPrimeGrid();
+    
+        Label_440:
+        this->UpdateTime(K2Node_Event_timeState);
+    
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(K2Node_Event_timeState.isPausedByEod);
+    
+        bool BooleanAND = UKismetMathLibrary::BooleanAND(K2Node_Event_timeState.isPaused, Not_PreBool);
+    
+        bool NotEqual_BoolBool = UKismetMathLibrary::NotEqual_BoolBool(lastPauseState, BooleanAND);
+    
+        if (!NotEqual_BoolBool)
+            return;
+    
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(K2Node_Event_timeState.isPausedByEod);
+    
+        bool BooleanAND = UKismetMathLibrary::BooleanAND(K2Node_Event_timeState.isPaused, Not_PreBool);
+    
+        bool lastPauseState = BooleanAND;
+    
+        TimePausedStatusNotification->this->ShowPauseStatus(lastPauseState);
+    
+        Label_746:
+        PlayAnimation = UUserWidget::PlayAnimation(fadein, 0, 1, 0x0, 1, false);
+    
+        UArcoWidgetBase::ListenToWidgetActions(TimeControlButtons);
+    
+        Label_821:
+        Array_Length = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(K2Node_Event_newHints.hints);
+    
+        bool EqualEqual_IntInt = UKismetMathLibrary::EqualEqual_IntInt(Array_Length, 0);
+    
+        if (!EqualEqual_IntInt)
+            goto Label_974;
+    
+        KeybindHints->this->Clear();
+    
+        Label_974:
+        KeybindHints->this->Show(K2Node_Event_newHints);
+    
+        Label_1021:
+        bool Temp_bool_Variable_2 = K2Node_Event_showButton;
+    
+        Temp_byte_Variable_4 = 0x1;
+    
+        Temp_byte_Variable_5 = 0x0;
+    
+        endDayOverlay->SetVisibility(Temp_bool_Variable_2 ? Temp_byte_Variable_4 : Temp_byte_Variable_5);
+    
+        if (!K2Node_Event_showButton)
+            goto Label_1254;
+    
+        bool IsVisible = CentralActionables->IsVisible();
+    
+        if (!IsVisible)
+            goto Label_1266;
+    
+        this->PresentEod();
+    
+        Label_1254:
+        bool pendingEodButtonAnimate = false;
+    
+        Label_1266:
+        bool pendingEodButtonAnimate = true;
+    
+        endDayOverlay->SetRenderOpacity(0);
+    
+        Label_1315:
+        K2Node_MakeStruct_HudAction.action = "openEndScreenButton";
+    
+        K2Node_MakeStruct_HudAction.paramString = "";
+    
+        K2Node_MakeStruct_HudAction.paramName = "None";
+    
+        K2Node_MakeStruct_HudAction.paramInt = 0;
+    
+        K2Node_MakeStruct_HudAction.paramFloat = 0;
+    
+        K2Node_MakeStruct_HudAction.paramGrid = FIntVector(0, 0, 0);
+    
+        bool K2Node_MakeStruct_HudAction.paramBool = false;
+    
+        K2Node_MakeStruct_HudAction.paramVector = FVector(0, 0, 0);
+    
+        UArcoWidgetBase::HudAction(K2Node_MakeStruct_HudAction);
+    
+        Label_1644:
+        this->UpdateActiveEffects_(K2Node_Event_effects);
+    
+        Label_1668:
+        if (!K2Node_Event_show_2)
+            goto Label_1802;
+    
+        Create_1 = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/LoadingScreen.LoadingScreen_C"), nullptr);
+    
+        bool AddToPlayerScreen = Create_1->AddToPlayerScreen(0);
+    
+        LoadingScreenWidget = Create_1;
+    
+        Label_1802:
+        LoadingScreenWidget->RemoveFromParent();
+    
+        goto Label_746;
+    
+        Label_1843:
+        UArcoWidgetBase::ListenToWidgetActions(HudQuestTracker);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Preplace_Phase);
+    
+        UArcoWidgetBase::ListenToWidgetActions(EventQueue_Display);
+    
+        UArcoWidgetBase::ListenToWidgetActions(TaxQuestTracker);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Stat_Approval);
+    
+        Label_1940:
+        this->UpdateDeveloperView(K2Node_Event_show_1);
+    
+        Label_1964:
+        this->UpdateFreecamUi(K2Node_Event_state);
+    
+        Label_1989:
+        EventQueue_Display->this->SetEventData(K2Node_Event_eventQueue);
+    
+        Label_2036:
+        PlayAnimation_1 = UUserWidget::PlayAnimation(fadein, 0, 1, 0x0, 1, false);
+    
+        MainHudCanvas->SetVisibility(0x4);
+    
+        Label_2130:
+        Stat_DiploPoints->this->UpdateCount(K2Node_Event_debtSummary.diplomacyPoints, 0);
+    
+        Temp_byte_Variable_2 = 0x3;
+    
+        Temp_byte_Variable_3 = 0x0;
+    
+        bool Temp_bool_Variable_1 = K2Node_Event_show;
+    
+        SaveOverlay->SetVisibility(Temp_bool_Variable_1 ? Temp_byte_Variable_2 : Temp_byte_Variable_3);
+    
+        bool Not_PreBool_2 = UKismetMathLibrary::Not_PreBool(ShowSaving);
+    
+        bool BooleanAND_2 = UKismetMathLibrary::BooleanAND(K2Node_Event_show, Not_PreBool_2);
+    
+        if (!BooleanAND_2)
+            goto Label_2484;
+    
+        PlayAnimation_3 = UUserWidget::PlayAnimation(animateSave, 0, 1, 0x0, 1, false);
+    
+        Label_2484:
+        bool Not_PreBool_1 = UKismetMathLibrary::Not_PreBool(K2Node_Event_show);
+    
+        bool BooleanAND_3 = UKismetMathLibrary::BooleanAND(Not_PreBool_1, ShowSaving);
+    
+        if (!BooleanAND_3)
+            return;
+    
+        PlayAnimationReverse_1 = UUserWidget::PlayAnimationReverse(animateSave, 2, false);
+    
+        bool ShowSaving = K2Node_Event_show;
+    
+        Label_2625:
+        TransientMessages->this->SpawnMessage(K2Node_Event_msg);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast = Cast<double>(HudStateChached.recentInfluenceChanges);
+    
+        Stat_Approval->this->UpdateCount(HudStateChached.influence, CallFunc_UpdateCount_recentDelta_ImplicitCast);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_1 = Cast<double>(HudStateChached.recentUnrestChanges);
+    
+        Stat_Rebellion->this->UpdateCount(HudStateChached.unrest, CallFunc_UpdateCount_recentDelta_ImplicitCast_1);
+    
+        Temp_byte_Variable = 0x3;
+    
+        Temp_byte_Variable_1 = 0x1;
+    
+        bool Temp_bool_Variable = HudStateChached.showGamepadCursor;
+    
+        Ui_FakeCursor_GamepadCursor->SetVisibility(Temp_bool_Variable ? Temp_byte_Variable_1 : Temp_byte_Variable);
+    
+        bool NotEqual_BoolBool_1 = UKismetMathLibrary::NotEqual_BoolBool(HudStateChached.showWheelHint, showToolbarHint);
+    
+        if (!NotEqual_BoolBool_1)
+            return;
+    
+        bool showToolbarHint = HudStateChached.showWheelHint;
+    
+        goto Label_39;
+    
+        this->CenterTopBar();
+    
+        Label_3152:
+        this->UpdateProblemSummariess(K2Node_Event_summary);
+    
+        Label_3176:
+        FindObject<UGameplayStatics>(nullptr, "/Script/Engine.Default__GameplayStatics")->PlaySound2D(this, FindObject<USoundCue>(nullptr, "Whiskerwood/Content/Audio/misc/wavs/cicadas_Cue.cicadas_Cue"), 1, 1, 0, nullptr, nullptr, true);
+    
+        goto Label_1315;
+    
+        Label_3241:
+        PlayAnimation_2 = UUserWidget::PlayAnimation(ReturnToHud, 0.3, 1, 0x0, 4, true);
+    
+        Label_3297:
+        GetRealTimeSeconds = UGameplayStatics::GetRealTimeSeconds(this);
+    
+        CallFunc_SetScalarParameterValue_ParameterValue_ImplicitCast = Cast<float>(GetRealTimeSeconds);
+    
+        UKismetMaterialLibrary::SetScalarParameterValue(this, FindObject<UMaterialParameterCollection>(nullptr, "Whiskerwood/Content/Code/Systems/TerrainVisualization/ProcGenBlock/MP_TerrainMetaDataParameters.MP_TerrainMetaDataParameters"), "NauticalMapShowTimestamp", CallFunc_SetScalarParameterValue_ParameterValue_ImplicitCast);
+    
+        Label_3398:
+        this->UpdateResources(K2Node_Event_resources);
+    
+        this->CenterTopBar();
+    
+        Label_3436:
+        this->UpdateReplayMenu(K2Node_Event_replayState);
+    
+        Label_3460:
+        this->UpdateQuests(K2Node_Event_questHudState);
+    
+        Label_3484:
+        HudStateChached = K2Node_Event_newState;
+    
+        this->UpdateBasicElements(HudStateChached);
+    
+        this->UpdateHudVis(HudStateChached.showHud);
+    
+        this->HandleDirtyEvents(HudStateChached.hudEvents);
+    
+        Toggle_Layers->this->SetSelected(HudStateChached.sliceView);
+    
+        Toggle_Temp->this->SetSelected(HudStateChached.heatView);
+    
+        Toggle_Bulldoze->this->SetSelected(HudStateChached.bulldozeActive);
+    
+        goto Label_2671;
+    
+        Label_3766:
+        UArcoWidgetBase::ListenToWidgetActions(toolbar);
+    
+        goto Label_1843;
+    
+        goto Label_3766;
+    
+        UArcoWidgetBase::ListenToWidgetActions(Toggle_Layers);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Toggle_Temp);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Toggle_Bulldoze);
+    
+        UArcoWidgetBase::ListenToWidgetActions(radialMenu);
+    
+        UArcoWidgetBase::ListenToWidgetActions(MetaButtonsRow);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Stat_DiploPoints);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Stat_Population);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Stat_FreeWorkers);
+    
+        Temp_int_Loop_Counter_Variable = 0;
+    
+        Temp_int_Array_Index_Variable = 0;
+    
+        Label_4009:
+        GetAllChildren = ResourcesParent->GetAllChildren();
+    
+        Array_Length_1 = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(GetAllChildren);
+    
+        bool Less_IntInt = UKismetMathLibrary::Less_IntInt(Temp_int_Loop_Counter_Variable, Array_Length_1);
+    
+        if (!Less_IntInt)
+            return;
+    
+        Temp_int_Array_Index_Variable = Temp_int_Loop_Counter_Variable;
+    
+        GetAllChildren = ResourcesParent->GetAllChildren();
+    
+        FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Get(GetAllChildren, Temp_int_Array_Index_Variable, CallFunc_Array_Get_Item);
+    
+        K2Node_DynamicCast_AsArco_Widget_Base = Cast<ArcoWidgetBase>(CallFunc_Array_Get_Item);
+    
+        K2Node_DynamicCast_bSuccess = Cast<bool>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        if (!K2Node_DynamicCast_bSuccess)
+            return;
+    
+        UArcoWidgetBase::ListenToWidgetActions(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        Add_IntInt = UKismetMathLibrary::Add_IntInt(Temp_int_Loop_Counter_Variable, 1);
+    
+        Temp_int_Loop_Counter_Variable = Add_IntInt;
+    
+        goto Label_4009;
+    
+        Label_4476:
+        Conv_IntToByte = UKismetMathLibrary::Conv_IntToByte(K2Node_Event_seasonSummary.currentHeat);
+    
+        SeasonSummary->this->SetData(K2Node_Event_seasonSummary.daysIntoSeason, K2Node_Event_seasonSummary.currentTemp, Conv_IntToByte, K2Node_Event_seasonSummary.seasonData);
+    
+        Label_4622:
+        goto Label_3176;
+    
+        Label_4627:
+        bool IsVisible_1 = CentralActionables->IsVisible();
+    
+        bool BooleanAND_1 = UKismetMathLibrary::BooleanAND(IsVisible_1, pendingEodButtonAnimate);
+    
+        if (!BooleanAND_1)
+            return;
+    
+        this->PresentEod();
+    
+        return;
+    }
+
+    // (Event, Public, HasOutParms, BlueprintEvent)
+    public void AnimateRecentPolicyCosts(const TArray<struct FRecentPolicyCost>*& recentPolicyCosts)
+    {
+        UberGraphFrame->K2Node_Event_recentPolicyCosts = recentPolicyCosts;
+    
+        ExecuteUbergraph_BP_PlayHud(15);
+    
+        return;
+    }
+
+    // (BlueprintCosmetic, Event, Public, BlueprintEvent)
+    public void Tick(struct FGeometry MyGeometry, float InDeltaTime)
+    {
+        UberGraphFrame->K2Node_Event_MyGeometry = MyGeometry;
+    
+        UberGraphFrame->K2Node_Event_InDeltaTime = InDeltaTime;
+    
+        ExecuteUbergraph_BP_PlayHud(4627);
+    
+        return;
+    }
+
+    // (BlueprintEvent)
+    private void BndEvt__BP_PlayHud_Arco_Button_CommonRound_K2Node_ComponentBoundEvent_0_OnClicked__DelegateSignature()
+    {
+        ExecuteUbergraph_BP_PlayHud(4622);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateSeasonInfo(struct FSeasonSummary seasonSummary)
+    {
+        UberGraphFrame->K2Node_Event_seasonSummary = seasonSummary;
+    
+        ExecuteUbergraph_BP_PlayHud(4476);
+    
+        return;
+    }
+
+    // (BlueprintCosmetic, Event, Public, BlueprintEvent)
+    public void Construct()
+    {
+        ExecuteUbergraph_BP_PlayHud(3790);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateDebugWindow(bool showDebugWindow)
+    {
+        UberGraphFrame->K2Node_Event_showDebugWindow = showDebugWindow;
+    
+        ExecuteUbergraph_BP_PlayHud(3765);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateGeneralUiValues(struct FHudState newState)
+    {
+        UberGraphFrame->K2Node_Event_newState = newState;
+    
+        ExecuteUbergraph_BP_PlayHud(3484);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateQuestElement(struct FQuestHudState questHudState)
+    {
+        UberGraphFrame->K2Node_Event_questHudState = questHudState;
+    
+        ExecuteUbergraph_BP_PlayHud(3460);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateReplayWindow(struct FReplayHudState replayState)
+    {
+        UberGraphFrame->K2Node_Event_replayState = replayState;
+    
+        ExecuteUbergraph_BP_PlayHud(3436);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateResourceView(struct FResourceHudState resources)
+    {
+        UberGraphFrame->K2Node_Event_resources = resources;
+    
+        ExecuteUbergraph_BP_PlayHud(3398);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void AnimateEnterNauticalUi()
+    {
+        ExecuteUbergraph_BP_PlayHud(3297);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void AnimateReturnToMainui()
+    {
+        ExecuteUbergraph_BP_PlayHud(3241);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateProblemSummaries(const struct FProblemSummaries_UI summary)
+    {
+        UberGraphFrame->K2Node_Event_summary = summary;
+    
+        ExecuteUbergraph_BP_PlayHud(3152);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void PushHeadlinerMessage(FString msg)
+    {
+        UberGraphFrame->K2Node_Event_msg = msg;
+    
+        ExecuteUbergraph_BP_PlayHud(2625);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateSavingOverlay(bool show)
+    {
+        UberGraphFrame->K2Node_Event_show = show;
+    
+        ExecuteUbergraph_BP_PlayHud(2194);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateDebtInfo(struct FDebtsSummary_Hud debtSummary)
+    {
+        UberGraphFrame->K2Node_Event_debtSummary = debtSummary;
+    
+        ExecuteUbergraph_BP_PlayHud(2130);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void FadeInMainUi()
+    {
+        ExecuteUbergraph_BP_PlayHud(2036);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdatePoliciesSummary(struct FPolicySummary nPolicies)
+    {
+        UberGraphFrame->K2Node_Event_nPolicies = nPolicies;
+    
+        ExecuteUbergraph_BP_PlayHud(2035);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateEventQueue(struct FEventQueue_Hud eventQueue)
+    {
+        UberGraphFrame->K2Node_Event_eventQueue = eventQueue;
+    
+        ExecuteUbergraph_BP_PlayHud(1989);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateTimelineSummary(struct FTimelineSummary timeline)
+    {
+        UberGraphFrame->K2Node_Event_timeline = timeline;
+    
+        ExecuteUbergraph_BP_PlayHud(1988);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdatePhotomode(struct FPhotomodeHudState state)
+    {
+        UberGraphFrame->K2Node_Event_state = state;
+    
+        ExecuteUbergraph_BP_PlayHud(1964);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateDeveloperUi(bool show)
+    {
+        UberGraphFrame->K2Node_Event_show_1 = show;
+    
+        ExecuteUbergraph_BP_PlayHud(1940);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateScienceValues(struct FHudState newState)
+    {
+        UberGraphFrame->K2Node_Event_newState_1 = newState;
+    
+        ExecuteUbergraph_BP_PlayHud(1939);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void ShowLoadingScreenEvent(bool show)
+    {
+        UberGraphFrame->K2Node_Event_show_2 = show;
+    
+        ExecuteUbergraph_BP_PlayHud(1668);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateActiveEffects(struct FActiveEffects_Hud effects)
+    {
+        UberGraphFrame->K2Node_Event_effects = effects;
+    
+        ExecuteUbergraph_BP_PlayHud(1644);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateEodButton(bool showButton)
+    {
+        UberGraphFrame->K2Node_Event_showButton = showButton;
+    
+        ExecuteUbergraph_BP_PlayHud(1021);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void EventPhaseChanged(Enum newPhase)
+    {
+        UberGraphFrame->K2Node_Event_newPhase = newPhase;
+    
+        ExecuteUbergraph_BP_PlayHud(1020);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateKeybinds_BpEvent(struct FKeybindHintsPanelData newHints)
+    {
+        UberGraphFrame->K2Node_Event_newHints = newHints;
+    
+        ExecuteUbergraph_BP_PlayHud(821);
+    
+        return;
+    }
+
+    // (Event, Public, BlueprintEvent)
+    public void UpdateTimeElement(struct FTimeHudState timeState)
+    {
+        UberGraphFrame->K2Node_Event_timeState = timeState;
+    
+        ExecuteUbergraph_BP_PlayHud(440);
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateReplayMenu(struct FReplayHudState hudstate)
+    {
+        bool IsValid_2 = UKismetSystemLibrary::IsValid(Debug_ReplayMenu);
+    
+        bool Not_PreBool_1 = UKismetMathLibrary::Not_PreBool(IsValid_2);
+    
+        bool BooleanAND_1 = UKismetMathLibrary::BooleanAND(Not_PreBool_1, hudstate.showWindow);
+    
+        if (!BooleanAND_1)
+            return;
+    
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/ReplayWidget.ReplayWidget_C"), nullptr);
+    
+        Create->AddToViewport(0);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Create);
+    
+        Debug_ReplayMenu = Create;
+    
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(hudstate.showWindow);
+    
+        bool IsValid_1 = UKismetSystemLibrary::IsValid(Debug_ReplayMenu);
+    
+        bool BooleanAND = UKismetMathLibrary::BooleanAND(IsValid_1, Not_PreBool);
+    
+        if (!BooleanAND)
+            return;
+    
+        Debug_ReplayMenu->RemoveFromParent();
+    
+        Debug_ReplayMenu = nullptr;
+    
+        bool IsValid = UKismetSystemLibrary::IsValid(Debug_ReplayMenu);
+    
+        if (!IsValid)
+            return;
+    
+        Debug_ReplayMenu->this->UpdateData(hudstate);
+    
+        bool Temp_bool_Variable = hudstate.isReplaying;
+    
+        Temp_byte_Variable_2 = 0x3;
+    
+        Temp_byte_Variable_3 = 0x1;
+    
+        ReplayText->SetVisibility(Temp_bool_Variable ? Temp_byte_Variable_3 : Temp_byte_Variable_2);
+    
+        Temp_byte_Variable = 0x3;
+    
+        Temp_byte_Variable_1 = 0x1;
+    
+        bool Temp_bool_Variable_1 = hudstate.badReplay;
+    
+        ReplayErr->SetVisibility(Temp_bool_Variable_1 ? Temp_byte_Variable_1 : Temp_byte_Variable);
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateDebugMenu(bool Show)
+    {
+        if (!Show)
+            goto Label_62;
+    
+        bool IsValid_1 = UKismetSystemLibrary::IsValid(Debug_DebugMenu);
+    
+        if (!IsValid_1)
+            goto Label_157;
+    
+        return;
+        Label_62:
+        bool IsValid = UKismetSystemLibrary::IsValid(Debug_DebugMenu);
+    
+        if (!IsValid)
+            return;
+    
+        Debug_DebugMenu->RemoveFromParent();
+    
+        Debug_DebugMenu = nullptr;
+    
+        return;
+        Label_157:
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/DebugUI_Components/DebugMenu.DebugMenu_C"), nullptr);
+    
+        Create->AddToViewport(0);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Create);
+    
+        Debug_DebugMenu = Create;
+    
+        Label_285:
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateTime(struct FTimeHudState Time state)
+    {
+        DayClock->this->SetDataByTimeState(Time state);
+    
+        TimeControlButtons->this->SetData(Time state.gameplaySpeed, Time state.isPaused);
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateQuests(struct FQuestHudState Quest hud state)
+    {
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateBasicElements(struct FHudState HudState)
+    {
+        Stat_Population->this->UpdateCount(HudState.currentPopulation, 0);
+    
+        IslandBadge->this->SetData(HudState.colonyName);
+    
+        Stat_FreeWorkers->this->UpdateCount(HudState.nUnemployed, 0);
+    
+        bool Temp_bool_Variable_2 = HudState.showToolbar;
+    
+        Temp_byte_Variable_4 = 0x4;
+    
+        Temp_byte_Variable_5 = 0x1;
+    
+        toolbar->SetVisibility(Temp_bool_Variable_2 ? Temp_byte_Variable_5 : Temp_byte_Variable_4);
+    
+        bool Temp_bool_Variable_2 = HudState.showToolbar;
+    
+        Temp_byte_Variable_4 = 0x4;
+    
+        Temp_byte_Variable_5 = 0x1;
+    
+        CentralActionables->SetVisibility(Temp_bool_Variable_2 ? Temp_byte_Variable_5 : Temp_byte_Variable_4);
+    
+        bool Temp_bool_Variable = HudState.showRightElements;
+    
+        Temp_byte_Variable = 0x4;
+    
+        Temp_byte_Variable_1 = 0x1;
+    
+        Rightbar->SetVisibility(Temp_bool_Variable ? Temp_byte_Variable_1 : Temp_byte_Variable);
+    
+        bool Temp_bool_Variable_1 = HudState.showCenterMessageArea;
+    
+        Temp_byte_Variable_2 = 0x4;
+    
+        Temp_byte_Variable_3 = 0x1;
+    
+        CentralNotifications->SetVisibility(Temp_bool_Variable_1 ? Temp_byte_Variable_3 : Temp_byte_Variable_2);
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void HandleDirtyEvents(struct FHudEvents happinessEffect)
+    {
+        bool Greater_IntInt_2 = UKismetMathLibrary::Greater_IntInt(happinessEffect.happyDelta, 0);
+    
+        if (!Greater_IntInt_2)
+            return;
+    
+        bool Greater_IntInt_1 = UKismetMathLibrary::Greater_IntInt(happinessEffect.prodDelta, 0);
+    
+        if (!Greater_IntInt_1)
+            return;
+    
+        bool Greater_IntInt = UKismetMathLibrary::Greater_IntInt(happinessEffect.speedDelta, 0);
+    
+        if (!Greater_IntInt)
+            return;
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateHudVis(bool ShowHud)
+    {
+        bool Temp_bool_Variable = ShowHud;
+    
+        Temp_byte_Variable = 0x4;
+    
+        Temp_byte_Variable_1 = 0x2;
+    
+        HideableElements->SetVisibility(Temp_bool_Variable ? Temp_byte_Variable_1 : Temp_byte_Variable);
+    
+        return;
+    }
+
+    // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public void UpdateResources(struct FResourceHudState NewParam)
+    {
+        Temp_name_Variable = "totalFood";
+    
+        bool Map_Find_1 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, Temp_name_Variable, CallFunc_Map_Find_Value_1);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast = Cast<double>(CallFunc_Map_Find_Value_1);
+    
+        Stat_AllFood->this->UpdateCount(NewParam.totalFood, CallFunc_UpdateCount_recentDelta_ImplicitCast);
+    
+        bool Map_Find_16 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_wood->ResourceType, CallFunc_Map_Find_Value_16);
+    
+        bool Map_Find_17 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_wood->ResourceType, CallFunc_Map_Find_Value_17);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_8 = Cast<double>(CallFunc_Map_Find_Value_16);
+    
+        stat_wood->this->UpdateCount(CallFunc_Map_Find_Value_17, CallFunc_UpdateCount_recentDelta_ImplicitCast_8);
+    
+        bool Map_Find_2 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_stone->ResourceType, CallFunc_Map_Find_Value_2);
+    
+        bool Map_Find_3 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_stone->ResourceType, CallFunc_Map_Find_Value_3);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_1 = Cast<double>(CallFunc_Map_Find_Value_2);
+    
+        stat_stone->this->UpdateCount(CallFunc_Map_Find_Value_3, CallFunc_UpdateCount_recentDelta_ImplicitCast_1);
+    
+        bool Map_Find_12 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_planks->ResourceType, CallFunc_Map_Find_Value_12);
+    
+        bool Map_Find_13 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_planks->ResourceType, CallFunc_Map_Find_Value_13);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_6 = Cast<double>(CallFunc_Map_Find_Value_12);
+    
+        stat_planks->this->UpdateCount(CallFunc_Map_Find_Value_13, CallFunc_UpdateCount_recentDelta_ImplicitCast_6);
+    
+        bool Map_Find_8 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_bricks->ResourceType, CallFunc_Map_Find_Value_8);
+    
+        bool Map_Find_11 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_bricks->ResourceType, CallFunc_Map_Find_Value_11);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_4 = Cast<double>(CallFunc_Map_Find_Value_8);
+    
+        stat_bricks->this->UpdateCount(CallFunc_Map_Find_Value_11, CallFunc_UpdateCount_recentDelta_ImplicitCast_4);
+    
+        Temp_byte_Variable = 0x1;
+    
+        Temp_byte_Variable_1 = 0x0;
+    
+        bool Temp_bool_Variable = NewParam.bCopperUnlocked;
+    
+        stat_copper->SetVisibility(Temp_bool_Variable ? Temp_byte_Variable : Temp_byte_Variable_1);
+    
+        bool Map_Find_9 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_copper->ResourceType, CallFunc_Map_Find_Value_9);
+    
+        bool Map_Find_10 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_copper->ResourceType, CallFunc_Map_Find_Value_10);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_5 = Cast<double>(CallFunc_Map_Find_Value_9);
+    
+        stat_copper->this->UpdateCount(CallFunc_Map_Find_Value_10, CallFunc_UpdateCount_recentDelta_ImplicitCast_5);
+    
+        Temp_byte_Variable_2 = 0x1;
+    
+        Temp_byte_Variable_3 = 0x0;
+    
+        bool Temp_bool_Variable_1 = NewParam.bIronUnlocked;
+    
+        stat_iron->SetVisibility(Temp_bool_Variable_1 ? Temp_byte_Variable_2 : Temp_byte_Variable_3);
+    
+        bool Map_Find_14 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_iron->ResourceType, CallFunc_Map_Find_Value_14);
+    
+        bool Map_Find_15 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_iron->ResourceType, CallFunc_Map_Find_Value_15);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_7 = Cast<double>(CallFunc_Map_Find_Value_14);
+    
+        stat_iron->this->UpdateCount(CallFunc_Map_Find_Value_15, CallFunc_UpdateCount_recentDelta_ImplicitCast_7);
+    
+        bool Map_Find_5 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_fuel->ResourceType, CallFunc_Map_Find_Value_5);
+    
+        bool Map_Find_6 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_fuel->ResourceType, CallFunc_Map_Find_Value_6);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_3 = Cast<double>(CallFunc_Map_Find_Value_5);
+    
+        stat_fuel->this->UpdateCount(CallFunc_Map_Find_Value_6, CallFunc_UpdateCount_recentDelta_ImplicitCast_3);
+    
+        bool Map_Find_4 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.resourceRecentDeltas, stat_machinery->ResourceType, CallFunc_Map_Find_Value_4);
+    
+        bool Map_Find_7 = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.baseResourceCounts, stat_machinery->ResourceType, CallFunc_Map_Find_Value_7);
+    
+        CallFunc_UpdateCount_recentDelta_ImplicitCast_2 = Cast<double>(CallFunc_Map_Find_Value_4);
+    
+        stat_machinery->this->UpdateCount(CallFunc_Map_Find_Value_7, CallFunc_UpdateCount_recentDelta_ImplicitCast_2);
+    
+        CallFunc_Map_Keys_Keys = [];
+    
+        FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Keys(NewParam.playerTrackedResources.counts, CallFunc_Map_Keys_Keys);
+    
+        Temp_int_Variable = 1;
+    
+        Label_2892:
+        Map_Length = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Length(NewParam.playerTrackedResources.counts);
+    
+        bool LessEqual_IntInt = UKismetMathLibrary::LessEqual_IntInt(Temp_int_Variable, Map_Length);
+    
+        if (!LessEqual_IntInt)
+            goto Label_3727;
+    
+        GetChildrenCount = trackedResourcesGrid->GetChildrenCount();
+    
+        bool Less_IntInt = UKismetMathLibrary::Less_IntInt(GetChildrenCount, Temp_int_Variable);
+    
+        if (!Less_IntInt)
+            goto Label_3270;
+    
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/ResourceCondensed.ResourceCondensed_C"), nullptr);
+    
+        AddChild = trackedResourcesGrid->AddChild(Create);
+    
+        this->ListenToWidgetActions(Create);
+    
+        Label_3270:
+        Subtract_IntInt_1 = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        GetChildAt = trackedResourcesGrid->GetChildAt(Subtract_IntInt_1);
+    
+        K2Node_DynamicCast_AsArco_Widget_Base = Cast<ArcoWidgetBase>(GetChildAt);
+    
+        K2Node_DynamicCast_bSuccess = Cast<bool>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        if (!K2Node_DynamicCast_bSuccess)
+            goto Label_4243;
+    
+        K2Node_DynamicCast_AsResource_Condensed = Cast<ResourceCondensed_C>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        K2Node_DynamicCast_bSuccess_1 = Cast<bool>(K2Node_DynamicCast_AsResource_Condensed);
+    
+        if (!K2Node_DynamicCast_bSuccess_1)
+            return;
+    
+        Subtract_IntInt = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        bool Map_Find = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Find(NewParam.playerTrackedResources.counts, CallFunc_Map_Keys_Keys[Subtract_IntInt], CallFunc_Map_Find_Value);
+    
+        K2Node_DynamicCast_AsResource_Condensed->this->UpdateData(CallFunc_Map_Find_Value, CallFunc_Map_Keys_Keys[Subtract_IntInt], 0, true);
+    
+        Label_3727:
+        Map_Length = FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Length(NewParam.playerTrackedResources.counts);
+    
+        FindObject<UArcoUi_HelperFunctions_C>(nullptr, "Whiskerwood/Content/UI/DebugUI_Components/ArcoUi_HelperFunctions.Default__ArcoUi_HelperFunctions_C")->this->RemoveChildrenPastMax(trackedResourcesGrid, Map_Length, this);
+    
+        Add_IntInt = UKismetMathLibrary::Add_IntInt(Temp_int_Variable, 1);
+    
+        Temp_int_Variable = Add_IntInt;
+    
+        goto Label_2892;
+    
+        Subtract_IntInt = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        Divide_IntInt = UKismetMathLibrary::Divide_IntInt(Subtract_IntInt, 10);
+    
+        SlotAsUniformGridSlot = UWidgetLayoutLibrary::SlotAsUniformGridSlot(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        SlotAsUniformGridSlot->SetRow(Divide_IntInt);
+    
+        Subtract_IntInt = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        Percent_IntInt = UKismetMathLibrary::Percent_IntInt(Subtract_IntInt, 10);
+    
+        SlotAsUniformGridSlot = UWidgetLayoutLibrary::SlotAsUniformGridSlot(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        SlotAsUniformGridSlot->SetColumn(Percent_IntInt);
+    
+        Label_4243:
+        UKismetSystemLibrary::PrintString(this, "unexpected non-arco child in container", true, true, FLinearColor(0, 0.66, 1, 1), 2, "None");
+    
+        return;
+    }
+
+    // (Public, HasOutParms, BlueprintCallable, BlueprintEvent, BlueprintPure)
+    public class UWidget* tooltip_slice()
+    {
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/DaySummary/TooltipFrame.TooltipFrame_C"), nullptr);
+    
+        Create->this->ConfigureTooltip_AsText("inputBinding.sliceView", "tooltip.slice.desc");
+    
+        ReturnValue = Create;
+    
+        return ReturnValue;
+    }
+
+    // (BlueprintCosmetic, Event, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public struct FEventReply OnMouseButtonDown(struct FGeometry MyGeometry, const struct FPointerEvent*& MouseEvent)
+    {
+        bool PointerEvent_IsMouseButtonDown = UKismetInputLibrary::PointerEvent_IsMouseButtonDown(MouseEvent, FKey("LeftMouseButton"));
+    
+        if (!PointerEvent_IsMouseButtonDown)
+            goto Label_130;
+    
+        Handled = UWidgetBlueprintLibrary::Handled();
+    
+        ReturnValue = Handled;
+    
+        return;
+        Label_130:
+        Unhandled = UWidgetBlueprintLibrary::Unhandled();
+    
+        ReturnValue = Unhandled;
+    
+        Label_185:
+        return ReturnValue;
+    }
+
+    // (BlueprintCosmetic, Event, Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public struct FEventReply OnMouseButtonDoubleClick(struct FGeometry InMyGeometry, const struct FPointerEvent*& InMouseEvent)
+    {
+        Handled = UWidgetBlueprintLibrary::Handled();
+    
+        ReturnValue = Handled;
+    
+        return ReturnValue;
+    }
+
+    // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public void UpdateActiveEffects_(struct FActiveEffects_Hud effects)
+    {
+        Temp_int_Variable = 1;
+    
+        Label_28:
+        Array_Length = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(effects.effects);
+    
+        bool LessEqual_IntInt = UKismetMathLibrary::LessEqual_IntInt(Temp_int_Variable, Array_Length);
+    
+        if (!LessEqual_IntInt)
+            goto Label_925;
+    
+        GetChildrenCount = effectsGrid->GetChildrenCount();
+    
+        bool Less_IntInt = UKismetMathLibrary::Less_IntInt(GetChildrenCount, Temp_int_Variable);
+    
+        if (!Less_IntInt)
+            goto Label_392;
+    
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/EffectIconView.EffectIconView_C"), nullptr);
+    
+        AddChild = effectsGrid->AddChild(Create);
+    
+        this->ListenToWidgetActions(Create);
+    
+        Label_392:
+        Subtract_IntInt_1 = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        GetChildAt = effectsGrid->GetChildAt(Subtract_IntInt_1);
+    
+        K2Node_DynamicCast_AsArco_Widget_Base = Cast<ArcoWidgetBase>(GetChildAt);
+    
+        K2Node_DynamicCast_bSuccess = Cast<bool>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        if (!K2Node_DynamicCast_bSuccess)
+            goto Label_1251;
+    
+        K2Node_DynamicCast_AsEffect_Icon_View = Cast<EffectIconView_C>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        K2Node_DynamicCast_bSuccess_1 = Cast<bool>(K2Node_DynamicCast_AsEffect_Icon_View);
+    
+        if (!K2Node_DynamicCast_bSuccess_1)
+            return;
+    
+        Subtract_IntInt = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        K2Node_DynamicCast_AsEffect_Icon_View->this->SetData(effects.effects[Subtract_IntInt], true);
+    
+        Subtract_IntInt = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        SlotAsUniformGridSlot = UWidgetLayoutLibrary::SlotAsUniformGridSlot(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        SlotAsUniformGridSlot->SetRow(Subtract_IntInt);
+    
+        SlotAsUniformGridSlot = UWidgetLayoutLibrary::SlotAsUniformGridSlot(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        SlotAsUniformGridSlot->SetColumn(0);
+    
+        Label_925:
+        Array_Length = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(effects.effects);
+    
+        FindObject<UArcoUi_HelperFunctions_C>(nullptr, "Whiskerwood/Content/UI/DebugUI_Components/ArcoUi_HelperFunctions.Default__ArcoUi_HelperFunctions_C")->this->RemoveChildrenPastMax(effectsGrid, Array_Length, this);
+    
+        if (!effects.animateNewEffect)
+            return;
+    
+        PlayAnimation = UUserWidget::PlayAnimation(WorldEffectNew, 0, 1, 0x0, 1, false);
+    
+        EffectDetailsCondensed->this->SetData_NonActive(effects.newEffect);
+    
+        Add_IntInt = UKismetMathLibrary::Add_IntInt(Temp_int_Variable, 1);
+    
+        Temp_int_Variable = Add_IntInt;
+    
+        goto Label_28;
+    
+        Label_1251:
+        UKismetSystemLibrary::PrintString(this, "unexpected non-arco child in container", true, true, FLinearColor(0, 0.66, 1, 1), 2, "None");
+    
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateDeveloperView(bool show)
+    {
+        if (!show)
+            goto Label_62;
+    
+        bool IsValid_1 = UKismetSystemLibrary::IsValid(DeveloperView);
+    
+        if (!IsValid_1)
+            goto Label_157;
+    
+        return;
+        Label_62:
+        bool IsValid = UKismetSystemLibrary::IsValid(DeveloperView);
+    
+        if (!IsValid)
+            return;
+    
+        DeveloperView->RemoveFromParent();
+    
+        DeveloperView = nullptr;
+    
+        return;
+        Label_157:
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/ArcoViews/Arcoview_developer_BP.Arcoview_developer_BP_C"), nullptr);
+    
+        Create->AddToViewport(0);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Create);
+    
+        DeveloperView = Create;
+    
+        Label_285:
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void UpdateFreecamUi(struct FPhotomodeHudState show)
+    {
+        if (!show.showPhotomodeHud)
+            goto Label_116;
+    
+        bool IsValid_1 = UKismetSystemLibrary::IsValid(FreecamUi);
+    
+        if (!IsValid_1)
+            goto Label_211;
+    
+        Label_66:
+        FreecamUi->this->SetData(show);
+    
+        return;
+        Label_116:
+        bool IsValid = UKismetSystemLibrary::IsValid(FreecamUi);
+    
+        if (!IsValid)
+            return;
+    
+        FreecamUi->RemoveFromParent();
+    
+        FreecamUi = nullptr;
+    
+        return;
+        Label_211:
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/PhotomodeCam_UI.PhotomodeCam_UI_C"), nullptr);
+    
+        Create->AddToViewport(0);
+    
+        UArcoWidgetBase::ListenToWidgetActions(Create);
+    
+        FreecamUi = Create;
+    
+        goto Label_66;
+    
+        Label_344:
+        return;
+    }
+
+    // (Public, HasOutParms, BlueprintCallable, BlueprintEvent, BlueprintPure)
+    public class UWidget* GetApprovalTooltip()
+    {
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/DaySummary/TooltipFrame.TooltipFrame_C"), nullptr);
+    
+        Create->this->ConfigureAsApprovalTooltip();
+    
+        ReturnValue = Create;
+    
+        return ReturnValue;
+    }
+
+    // (Public, HasOutParms, BlueprintCallable, BlueprintEvent, BlueprintPure)
+    public class UWidget* GetClawsTrustTooltip()
+    {
+        FindObject<UArcoUi_CommonTooltips_C>(nullptr, "Whiskerwood/Content/UI/DebugUI_Components/ArcoUi_CommonTooltips.Default__ArcoUi_CommonTooltips_C")->this->Tooltip_ClawsTrust(this, CallFunc_Tooltip_ClawsTrust_NewParam);
+    
+        ReturnValue = CallFunc_Tooltip_ClawsTrust_NewParam;
+    
+        return ReturnValue;
+    }
+
+    // (Public, HasOutParms, BlueprintCallable, BlueprintEvent, BlueprintPure)
+    public class UWidget* Get_diplomacyIcon_ToolTipWidget()
+    {
+        FindObject<UArcoUi_CommonTooltips_C>(nullptr, "Whiskerwood/Content/UI/DebugUI_Components/ArcoUi_CommonTooltips.Default__ArcoUi_CommonTooltips_C")->this->Tooltip_ClawsDiplomacy(this, CallFunc_Tooltip_ClawsDiplomacy_NewParam);
+    
+        ReturnValue = CallFunc_Tooltip_ClawsDiplomacy_NewParam;
+    
+        return ReturnValue;
+    }
+
+    // (Public, HasOutParms, BlueprintCallable, BlueprintEvent)
+    public void UpdateProblemSummariess(struct FProblemSummaries_UI*& data)
+    {
+        Temp_int_Variable = 1;
+    
+        Label_28:
+        Array_Length = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(data.problems);
+    
+        bool LessEqual_IntInt = UKismetMathLibrary::LessEqual_IntInt(Temp_int_Variable, Array_Length);
+    
+        if (!LessEqual_IntInt)
+            goto Label_751;
+    
+        GetChildrenCount = ImportantAgentModifiers->GetChildrenCount();
+    
+        bool Less_IntInt = UKismetMathLibrary::Less_IntInt(GetChildrenCount, Temp_int_Variable);
+    
+        if (!Less_IntInt)
+            goto Label_397;
+    
+        Create = FindObject<UWidgetBlueprintLibrary>(nullptr, "/Script/UMG.Default__WidgetBlueprintLibrary")->Create(this, FindObject<UWidgetBlueprintGeneratedClass>(nullptr, "Whiskerwood/Content/UI/ProblemSummaryBannerWidget.ProblemSummaryBannerWidget_C"), nullptr);
+    
+        AddChild = ImportantAgentModifiers->AddChild(Create);
+    
+        this->ListenToWidgetActions(Create);
+    
+        Label_397:
+        Subtract_IntInt_1 = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        GetChildAt = ImportantAgentModifiers->GetChildAt(Subtract_IntInt_1);
+    
+        K2Node_DynamicCast_AsArco_Widget_Base = Cast<ArcoWidgetBase>(GetChildAt);
+    
+        K2Node_DynamicCast_bSuccess = Cast<bool>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        if (!K2Node_DynamicCast_bSuccess)
+            goto Label_1148;
+    
+        K2Node_DynamicCast_AsProblem_Summary_Banner_Widget = Cast<ProblemSummaryBannerWidget_C>(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        K2Node_DynamicCast_bSuccess_1 = Cast<bool>(K2Node_DynamicCast_AsProblem_Summary_Banner_Widget);
+    
+        if (!K2Node_DynamicCast_bSuccess_1)
+            return;
+    
+        Subtract_IntInt = UKismetMathLibrary::Subtract_IntInt(Temp_int_Variable, 1);
+    
+        K2Node_DynamicCast_AsProblem_Summary_Banner_Widget->this->SetData(data.problems[Subtract_IntInt]);
+    
+        Label_751:
+        Array_Length = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(data.problems);
+    
+        FindObject<UArcoUi_HelperFunctions_C>(nullptr, "Whiskerwood/Content/UI/DebugUI_Components/ArcoUi_HelperFunctions.Default__ArcoUi_HelperFunctions_C")->this->RemoveChildrenPastMax(ImportantAgentModifiers, Array_Length, this);
+    
+        Add_IntInt = UKismetMathLibrary::Add_IntInt(Temp_int_Variable, 1);
+    
+        Temp_int_Variable = Add_IntInt;
+    
+        goto Label_28;
+    
+        K2Node_MakeStruct_Margin.Left = 10;
+    
+        K2Node_MakeStruct_Margin.Top = 0;
+    
+        K2Node_MakeStruct_Margin.Right = 10;
+    
+        K2Node_MakeStruct_Margin.Bottom = 0;
+    
+        SlotAsHorizontalBoxSlot = UWidgetLayoutLibrary::SlotAsHorizontalBoxSlot(K2Node_DynamicCast_AsArco_Widget_Base);
+    
+        SlotAsHorizontalBoxSlot->SetPadding(K2Node_MakeStruct_Margin);
+    
+        Label_1148:
+        UKismetSystemLibrary::PrintString(this, "unexpected non-arco child in container", true, true, FLinearColor(0, 0.66, 1, 1), 2, "None");
+    
+        return;
+    }
+
+    // (Event, Protected, HasOutParms, HasDefaults, BlueprintCallable, BlueprintEvent)
+    protected struct FNaviSubGridLayout* ComputeSubGridLayout()
+    {
+        bool IsValid = UKismetSystemLibrary::IsValid(Preplace_Phase);
+    
+        if (!IsValid)
+            goto Label_145;
+    
+        Temp_struct_Variable = FVector(-1, 0, 0);
+    
+        FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Add(GridMembers, Preplace_Phase, Temp_struct_Variable);
+    
+        Label_145:
+        bool IsValid_1 = UKismetSystemLibrary::IsValid(m_submenu);
+    
+        if (!IsValid_1)
+            goto Label_247;
+    
+        FindObject<UBlueprintMapLibrary>(nullptr, "/Script/Engine.Default__BlueprintMapLibrary")->Map_Add(GridMembers, m_submenu, Temp_struct_Variable_1);
+    
+        Label_247:
+        K2Node_MakeStruct_NaviSubGridLayout.name = "PlayHud";
+    
+        K2Node_MakeStruct_NaviSubGridLayout.defaultFocusedMember = nullptr;
+    
+        K2Node_MakeStruct_NaviSubGridLayout.gridMembers = GridMembers;
+    
+        K2Node_MakeStruct_NaviSubGridLayout.tabReceptionPriority = 0;
+    
+        ReturnValue = K2Node_MakeStruct_NaviSubGridLayout;
+    
+        return ReturnValue;
+    }
+
+    // (BlueprintCosmetic, Event, Public, HasOutParms, BlueprintCallable, BlueprintEvent, Const)
+    public void OnPaint(struct FPaintContext*& Context)
+    {
+        return;
+    }
+
+    // (Public, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public void PresentEod()
+    {
+        bool pendingEodButtonAnimate = false;
+    
+        PlayAnimation_1 = UUserWidget::PlayAnimation(EodSlidein, 0, 1, 0x0, 1, false);
+    
+        PlayAnimation = UUserWidget::PlayAnimation(ThrobEod, 0, 0, 0x0, 1, false);
+    
+        GetArcoSys = UArcoSystems::GetArcoSys(CallFunc_GetArcoSys_out_isValid);
+    
+        if (!CallFunc_GetArcoSys_out_isValid)
+            goto Label_361;
+    
+        Conv_IntToString = UKismetStringLibrary::Conv_IntToString(GetArcoSys->m_worldTime->m_day);
+    
+        Conv_StringToName = UKismetStringLibrary::Conv_StringToName(Conv_IntToString);
+    
+        K2Node_MakeArray_Array = [ Conv_StringToName ];
+    
+        eodDayText->SetKeyWithArgs("message.dayended", K2Node_MakeArray_Array);
+    
+        return;
+        Label_361:
+        eodDayText->SetKey("message.dayendedGeneric");
+    
+        Label_406:
+        return;
+    }
+
+    // (Public, BlueprintCallable, BlueprintEvent)
+    public void CenterTopBar()
+    {
+        PanelLeft->ForceLayoutPrepass();
+    
+        PanelRight->ForceLayoutPrepass();
+    
+        GetDesiredSize = PanelRight->GetDesiredSize();
+    
+        UKismetMathLibrary::BreakVector2D(GetDesiredSize, CallFunc_BreakVector2D_X, CallFunc_BreakVector2D_Y);
+    
+        GetDesiredSize_1 = PanelLeft->GetDesiredSize();
+    
+        UKismetMathLibrary::BreakVector2D(GetDesiredSize_1, CallFunc_BreakVector2D_X_1, CallFunc_BreakVector2D_Y_1);
+    
+        Subtract_DoubleDouble_1 = UKismetMathLibrary::Subtract_DoubleDouble(CallFunc_BreakVector2D_X, CallFunc_BreakVector2D_X_1);
+    
+        FMax_1 = UKismetMathLibrary::FMax(Subtract_DoubleDouble_1, 0);
+    
+        CallFunc_SetMinDesiredWidth_InMinDesiredWidth_ImplicitCast_1 = Cast<float>(FMax_1);
+    
+        LeftPanelEqualizer->SetMinDesiredWidth(CallFunc_SetMinDesiredWidth_InMinDesiredWidth_ImplicitCast_1);
+    
+        GetDesiredSize = PanelRight->GetDesiredSize();
+    
+        UKismetMathLibrary::BreakVector2D(GetDesiredSize, CallFunc_BreakVector2D_X, CallFunc_BreakVector2D_Y);
+    
+        GetDesiredSize_1 = PanelLeft->GetDesiredSize();
+    
+        UKismetMathLibrary::BreakVector2D(GetDesiredSize_1, CallFunc_BreakVector2D_X_1, CallFunc_BreakVector2D_Y_1);
+    
+        Subtract_DoubleDouble = UKismetMathLibrary::Subtract_DoubleDouble(CallFunc_BreakVector2D_X_1, CallFunc_BreakVector2D_X);
+    
+        FMax = UKismetMathLibrary::FMax(Subtract_DoubleDouble, 0);
+    
+        CallFunc_SetMinDesiredWidth_InMinDesiredWidth_ImplicitCast = Cast<float>(FMax);
+    
+        RightPanelEqualizer->SetMinDesiredWidth(CallFunc_SetMinDesiredWidth_InMinDesiredWidth_ImplicitCast);
+    
+        return;
+    }
+
+    // (Public, HasOutParms, HasDefaults, BlueprintCallable, BlueprintEvent)
+    public void AnimatePolicyCosts(TArray<struct FRecentPolicyCost>*& NewParam)
+    {
+        Temp_int_Loop_Counter_Variable = 0;
+    
+        Temp_int_Array_Index_Variable_1 = 0;
+    
+        Label_51:
+        Array_Length = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(NewParam);
+    
+        bool Less_IntInt = UKismetMathLibrary::Less_IntInt(Temp_int_Loop_Counter_Variable, Array_Length);
+    
+        if (!Less_IntInt)
+            return;
+    
+        Temp_int_Array_Index_Variable_1 = Temp_int_Loop_Counter_Variable;
+    
+        bool Temp_bool_True_if_break_was_hit_Variable = false;
+    
+        Temp_int_Loop_Counter_Variable_1 = 0;
+    
+        Temp_int_Array_Index_Variable = 0;
+    
+        Label_247:
+        bool Not_PreBool = UKismetMathLibrary::Not_PreBool(Temp_bool_True_if_break_was_hit_Variable);
+    
+        GetAllChildren = effectsGrid->GetAllChildren();
+    
+        Array_Length_1 = FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Length(GetAllChildren);
+    
+        bool Less_IntInt_1 = UKismetMathLibrary::Less_IntInt(Temp_int_Loop_Counter_Variable_1, Array_Length_1);
+    
+        bool BooleanAND = UKismetMathLibrary::BooleanAND(Not_PreBool, Less_IntInt_1);
+    
+        if (!BooleanAND)
+            return;
+    
+        Temp_int_Array_Index_Variable = Temp_int_Loop_Counter_Variable_1;
+    
+        GetAllChildren = effectsGrid->GetAllChildren();
+    
+        FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Get(GetAllChildren, Temp_int_Array_Index_Variable, CallFunc_Array_Get_Item_1);
+    
+        K2Node_DynamicCast_AsEffect_Icon_View = Cast<EffectIconView_C>(CallFunc_Array_Get_Item_1);
+    
+        K2Node_DynamicCast_bSuccess = Cast<bool>(K2Node_DynamicCast_AsEffect_Icon_View);
+    
+        if (!K2Node_DynamicCast_bSuccess)
+            return;
+    
+        FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Get(NewParam, Temp_int_Array_Index_Variable_1, CallFunc_Array_Get_Item);
+    
+        bool EqualEqual_NameName = UKismetMathLibrary::EqualEqual_NameName(K2Node_DynamicCast_AsEffect_Icon_View->data.effectKey, CallFunc_Array_Get_Item.policyKey);
+    
+        if (!EqualEqual_NameName)
+            return;
+    
+        FindObject<UKismetArrayLibrary>(nullptr, "/Script/Engine.Default__KismetArrayLibrary")->Array_Get(NewParam, Temp_int_Array_Index_Variable_1, CallFunc_Array_Get_Item);
+    
+        K2Node_DynamicCast_AsEffect_Icon_View->this->animateApprovalSpend(CallFunc_Array_Get_Item.cost);
+    
+        bool Temp_bool_True_if_break_was_hit_Variable = true;
+    
+        Add_IntInt = UKismetMathLibrary::Add_IntInt(Temp_int_Loop_Counter_Variable, 1);
+    
+        Temp_int_Loop_Counter_Variable = Add_IntInt;
+    
+        goto Label_51;
+    
+        Add_IntInt_1 = UKismetMathLibrary::Add_IntInt(Temp_int_Loop_Counter_Variable_1, 1);
+    
+        Temp_int_Loop_Counter_Variable_1 = Add_IntInt_1;
+    
+        goto Label_247;
+    
+        return;
+    }
+};
