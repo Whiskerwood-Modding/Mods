@@ -1,12 +1,49 @@
 # Whiskerwood-Mods
 
+To download mods, clone this repository or download the ZIP from the green "Code" button and extract it somewhere.
+
+> [!IMPORTANT]
+> Do not submit crash or bug reports to the developers when using mods. Make sure you can reproduce the issue without mods installed first!
+
 ## UE4SS Mods
 
-[WhiskerPOV](WhiskerPOV) - Click on a Whisker to view its point of view!
+#### Installation
 
-[DynamicResearchCostsMod](DynamicResearchCostsMod) - Adjusts research costs
+If you don't have UE4SS installed already:
+1. Grab the `UE4SS_v3.0.1-xx.zip` file from [the releases page](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/experimental-latest)
+2. Navigate to your game directory:
+`\steamapps\common\Wiskerwood\Wiskerwood\Binaries\Win64\`
+3. Extract all files from the zip directly into the Win64 folder
 
-[FasterTimeControlMod](FasterTimeControlMod) - Finer time control options
+To install `LUA` mods:
+1. Navigate to your game directory:
+`\steamapps\common\Wiskerwood\Wiskerwood\Binaries\Win64\ue4ss\Mods\`
+2. Copy the mod folder (e.g. `DynamicResearchCostsMod`) into the Mods folder
+3. Inside the mod folder, create an empty text file called `enabled.txt` to enable the mod
+    - Alternatively, edit `mods.txt` to add the mod name followed by ` : 1` to enable it, or ` : 0` to disable it
+
+To install `.pak` mods:
+1. Navigate to your game directory:
+`\steamapps\common\Wiskerwood\Wiskerwood\Content\Paks\LogicMods`
+2. Copy the `.pak` file into the LogicMods folder
+
+#### Uninstallation
+
+If you just want to uninstall the mod, navigate to mods folder and delete:
+`\steamapps\common\Whiskerwood\Whiskerwood\Binaries\Win64\ue4ss\Mods\<mod name>\enabled.txt`
+
+If you want to uninstall the mod loader (UE4SS):
+1. Navigate to game directory
+`\steamapps\common\Whiskerwood\Whiskerwood\Binaries\Win64\`
+2. Delete or rename file `dwmapi.dll`
+
+### Mods
+
+[WhiskerPOV](WhiskerPOV) - Click on a Whisker to view its point of view! (WIP)
+
+[DynamicResearchCostsMod](DynamicResearchCostsMod) - Adjusts research costs. Makes late-game research increasingly cheaper (i.e. tier 2 has 20% cost decrease, tier 3 has 40% decrease, etc.)
+
+[FasterTimeControlMod](FasterTimeControlMod) - Finer time control options (WIP)
 
 [NoResearchCostMod](NoResearchCostMod) - Unlocks all researches
 
@@ -14,7 +51,7 @@
 
 [PhotoModeMod](PhotoModeMod) - Press P to hide the player HUD
 
-[QuickpickMod](QuickpickMod) - Press F when hovering over a building to select it
+[QuickpickMod](QuickpickMod) - Press F when hovering over a building to select it (WIP)
 
 ## Asset Replacement Mods
 
