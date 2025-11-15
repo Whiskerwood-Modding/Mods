@@ -1,0 +1,6 @@
+{
+    "Name" : "Dynamic Name Pool",
+    "Description" : "Reads in the names.txt file from this mod's folder and they will be loaded into the game's name pool. Updates once per second.",
+    "Version" : "1.0",
+    "CreatedBy" : "Buckminsterfullerene"
+}

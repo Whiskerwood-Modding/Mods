@@ -5,6 +5,28 @@ To download mods, clone this repository or download the ZIP from the green "Code
 > [!IMPORTANT]
 > Do not submit crash or bug reports to the developers when using mods. Make sure you can reproduce the issue without mods installed first!
 
+## Official Mod Support
+
+#### Installation
+
+Copy each mod's folder to `%localappdata/Whiskerwood/Saved/mods` and launch game.
+
+### Mods
+
+[Camera Tweaks](Official/CameraTweaks/) - Tweaks the camera settings. Hold Shift to pan faster
+
+[Copper Slides](Official/CopperSlides/) - Changes the 
+
+[Dump Data Tables](Official/DumpDataTables/) - Dumps all moddable data tables to `%localappdata/Whiskerwood/Saved/Logs`
+
+[Higher Crop Yields](Official/HigherCropYields/) - Increases crop yields by 3x
+
+[Prettier Path](Official/PrettierPath/) - Changes the stone path texture to a prettier one
+
+[Short Night](Official/ShortNight/) - Speeds up night time to a configurable setting (0.5x speed to 10x speed)!
+
+[Whisker POV](Official/WhiskerPOV) - Click on a Whisker to view its point of view! (WIP)
+
 ## UE4SS Mods
 
 #### Installation
@@ -39,19 +61,17 @@ If you want to uninstall the mod loader (UE4SS):
 
 ### Mods
 
-[WhiskerPOV](WhiskerPOV) - Click on a Whisker to view its point of view! (WIP)
+[DynamicResearchCostsMod](UE4SS/DynamicResearchCostsMod) - Adjusts research costs. Makes late-game research increasingly cheaper (i.e. tier 2 has 20% cost decrease, tier 3 has 40% decrease, etc.)
 
-[DynamicResearchCostsMod](DynamicResearchCostsMod) - Adjusts research costs. Makes late-game research increasingly cheaper (i.e. tier 2 has 20% cost decrease, tier 3 has 40% decrease, etc.)
+[FasterTimeControlMod](UE4SS/FasterTimeControlMod) - Finer time control options (deprecated)
 
-[FasterTimeControlMod](FasterTimeControlMod) - Finer time control options (WIP)
+[NoResearchCostMod](UE4SS/NoResearchCostMod) - Unlocks all researches
 
-[NoResearchCostMod](NoResearchCostMod) - Unlocks all researches
+[OrbitalCameraTweaksMod](UE4SS/OrbitalCameraTweaksMod) - Tweaks the orbital camera settings. Press Shift to pan faster
 
-[OrbitalCameraTweaksMod](OrbitalCameraTweaksMod) - Tweaks the orbital camera settings. Press Shift to pan faster
+[PhotoModeMod](UE4SS/PhotoModeMod) - Press P to hide the player HUD
 
-[PhotoModeMod](PhotoModeMod) - Press P to hide the player HUD
-
-[QuickpickMod](QuickpickMod) - Press F when hovering over a building to select it (WIP)
+[QuickpickMod](UE4SS/QuickpickMod) - Press F when hovering over a building to select it (deprecated)
 
 ## Asset Replacement Mods
 
