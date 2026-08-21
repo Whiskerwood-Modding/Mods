@@ -73,6 +73,8 @@ If you want to uninstall the mod loader (UE4SS):
 
 [QuickpickMod](UE4SS/QuickpickMod) - Press F when hovering over a building to select it (deprecated)
 
+[WhiskerCapMod](UE4SS/WhiskerCapMod) - Caps your whisker population at a number set in Settings -> Mod tab (Off, 20-500); surplus whiskers pass away gently, unemployed first
+
 ## Asset Replacement Mods
 
 
