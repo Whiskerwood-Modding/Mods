@@ -1,6 +1,7 @@
 {
-    "Name" : "Higher Crop Yeilds",
-    "Description" : "Increases all crop yeilds by 3x",
-    "Version" : "1.0",
-    "CreatedBy" : "Buckminsterfullerene"
+	"Name": "Higher Crop Yields",
+	"Description": "Allows you to increase your crop yields by a multiplier!",
+	"Version": "1.0",
+	"CreatedBy": "Buckminsterfullerene",
+	"EngineVersion": "5.8"
 }

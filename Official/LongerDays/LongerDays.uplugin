@@ -1,0 +1,7 @@
+{
+	"Name": "Longer Days",
+	"Description": "Allows changing the length of day and night to configurable lengths in minutes.",
+	"Version": "1.4",
+	"CreatedBy": "Buckminsterfullerene",
+	"EngineVersion": "5.8"
+}

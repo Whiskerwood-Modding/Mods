@@ -1,6 +1,7 @@
 {
-    "Name" : "Camera Tweaks",
-    "Description" : "Enables a more flexible camera with configurations.",
-    "Version" : "1.0",
-    "CreatedBy" : "Buckminsterfullerene"
+	"Name": "Camera Tweaks",
+	"Description": "Enables a more flexible camera with configuration options!",
+	"Version": "1.3",
+	"CreatedBy": "Buckminsterfullerene",
+	"EngineVersion": "5.8"
 }

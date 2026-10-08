@@ -1,6 +1,7 @@
 {
-    "Name" : "Prettier Path",
-    "Description" : "Makes the stone path look prettier!",
-    "Version" : "1.0",
-    "CreatedBy" : "Buckminsterfullerene"
+	"Name": "Prettier Path",
+	"Description": "Makes the stone path actually look nice!",
+	"Version": "1.5",
+	"CreatedBy": "Buckminsterfullerene",
+	"EngineVersion": "5.8"
 }

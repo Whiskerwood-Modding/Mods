@@ -1,6 +1,7 @@
 {
-    "Name" : "Short Night",
-    "Description" : "Speeds up night time to a configurable setting (0.5x speed to 10x speed)!",
-    "Version" : "1.0",
-    "CreatedBy" : "Buckminsterfullerene"
+	"Name": "Short Night",
+	"Description": "Makes the night go by quicker by speeding it up the game during night time!",
+	"Version": "1.0",
+	"CreatedBy": "Buckminsterfullerene",
+	"EngineVersion": "5.8"
 }

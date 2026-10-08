@@ -1,6 +1,7 @@
 {
-    "Name" : "Dynamic Name Pool",
-    "Description" : "Reads in the names.txt file from this mod's folder and they will be loaded into the game's name pool. Updates once per second.",
-    "Version" : "1.0",
-    "CreatedBy" : "Buckminsterfullerene"
+	"Name": "Dynamic Name Pool",
+	"Description": "Allows you to add new whisker names to the name pool!",
+	"Version": "1.0",
+	"CreatedBy": "Buckminsterfullerene",
+	"EngineVersion": "5.8"
 }
